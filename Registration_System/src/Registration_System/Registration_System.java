@@ -215,8 +215,6 @@ public class Registration_System extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
 				"Reference No", "First Name", "Surname", "Address", "Post Code", "Telephone ", "Date of Reg", "Proof of ID", "Membership Type", "Amount Paid"
@@ -233,6 +231,30 @@ public class Registration_System extends JFrame {
 		panel.add(panel_4);
 		
 		JButton btnNewButton = new JButton("Add Record");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model=(DefaultTableModel)table.getModel();
+				model.addRow(new Object[] {
+						textField.getText(),
+						textField_1.getText(),
+						textField_2.getText(),
+						textField_3.getText(),
+						textField_7.getText(),
+						textField_5.getText(),
+						textField_6.getText(),
+						comboBox.getSelectedItem(),
+						comboBox_1.getSelectedItem(),
+						comboBox_2.getSelectedItem()
+				});
+				if(table.getSelectedRow()==-1) {
+					if(table.getRowCount()==0) {
+						JOptionPane.showMessageDialog(null, "Membership Update Confirmed", "Membership Registration System",JOptionPane.OK_OPTION);
+					}
+				}
+				
+			}
+			
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnNewButton.setBounds(41, 34, 228, 43);
 		panel_4.add(btnNewButton);
@@ -257,6 +279,25 @@ public class Registration_System extends JFrame {
 		panel_4.add(btnReset);
 		
 		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				DefaultTableModel model=(DefaultTableModel)table.getModel();
+				if(table.getSelectedRow()==-1) {
+					if(table.getRowCount()==0) {
+						JOptionPane.showMessageDialog(null, "No data to delete", "Membership Registration System", JOptionPane.OK_OPTION);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Select a row to delete", "Membership Registration System", JOptionPane.OK_OPTION);
+					}
+				}
+				else {
+					model.removeRow(table.getSelectedRow());
+				}
+			}
+		
+		});
 		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDelete.setBounds(791, 34, 228, 43);
 		panel_4.add(btnDelete);
@@ -275,6 +316,16 @@ public class Registration_System extends JFrame {
 		panel_4.add(btnExit);
 		
 		JButton btnPrint = new JButton("Print");
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					table.print();
+				}
+				catch(java.awt.print.PrinterException e) {
+					System.err.format("No Printer Found",e.getMessage());
+				}
+			}
+		});
 		btnPrint.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnPrint.setBounds(539, 34, 228, 43);
 		panel_4.add(btnPrint);
